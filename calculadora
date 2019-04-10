@@ -1,0 +1,65 @@
+.data
+BEMV: .asciiz "Bem-Vindo a Calculadora\n"
+ESCOL: .asciiz "Escolha\n [1] Soma\n [2] Subtracao\n"
+SUM: .asciiz "VOCE ESCOLHEU A SOMA\n"
+SUBT: .asciiz "VOCE ESCOLHEU A SUBTRACAO\n" 
+
+.text	
+	//	TELA DE BEM VINDO
+	LDA X7, BEMV
+	ADDI X8, XZR, 4
+	SVC 0
+	
+	//	PRINTA ESCOLHA 
+	LDA X7, ESCOL
+	ADDI X8, XZR, 4
+	SVC 0
+	
+	//	TELA DE ESCOLHA ( escolhe numero e manda para x2 )
+	ADD X7, XZR, XZR
+	ADDI X8, XZR, 5	
+	SVC 0
+	
+	//	TESTA SE EH SOMA
+	SUBI X3, X2, 1
+	CBZ X3, SOMA
+	SUBI X4, X2, 2
+	CBZ X4, SUBB
+	B EXIT
+	
+SOMA:
+	//	PRINTA A ESCOLHA DE SOMA
+	LDA X7, SUM
+	ADDI X8, XZR, 4
+	SVC 0
+	
+	//	ESCOLHA DE NUMEROS
+	// NUMERO 1
+	ADD X7, XZR, XZR
+	ADDI X8, XZR, 5
+	SVC 0
+	ADD X15, X2, XZR
+	
+	// NUMERO 2
+	ADD X7, XZR, XZR
+	ADDI X8, XZR, 5
+	SVC 0 
+	ADD X16, X2, XZR
+	
+	//	PRINTA O RESULTADO NA TELA
+	ADD X7, XZR, XZR
+	ADD X7, X16, X15
+	ADDI X8, XZR, 1
+	SVC 0
+	
+	
+	B EXIT 
+
+
+SUBB:	
+	LDA X7, SUBT
+	ADDI X8, XZR, 4
+	SVC 0
+	B EXIT
+
+EXIT:
